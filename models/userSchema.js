@@ -38,13 +38,12 @@ const userSchema = new mongoose.Schema({
   otpExpires: {
     type: Date,
   },
-  roll: {
+role: {
     type: String,
     required: true,
     enum: ["user", "admin", "moderator"],
     default: "user",
   },
-
   otpverify: {
     type: Boolean,
     default: false,
@@ -60,7 +59,7 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: {
     type: Date,
   },
-  tyimestamp: {
+timestamp: {
     type: Date,
     default: Date.now,
   },

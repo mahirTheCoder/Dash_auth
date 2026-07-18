@@ -156,33 +156,52 @@ const forgotPassword = async (req, res) => {
   const { email } = req.body;
 
   try {
-    if (!email) return res.status(400).send("Email is required");
-    if (!isValidEmail(email)) return res.status(400).send("Invalid email");
 
-    const user = await userSchema.findOne({ email });
-    if (!user) {
-      return res.status(400).send("User not found");
+    if (!email) {
+      return res.status(400).json({ success: false, message: "Email is required" });
+    }
+    if (!isValidEmail(email)) {
+      return res.status(400).json({ success: false, message: "Invalid email format" });
     }
 
-    // Generate password reset token
+    const user = await userSchema.findOne({ email });
+
+    const successMessage = "If an account exists with that email, a reset link has been sent.";
+
+    if (!user) {
+      return res.status(200).json({ success: true, message: successMessage });
+    }
+
     const resetToken = user.createPasswordResetToken();
 
-    await user.save();
+    await user.save({ validateBeforeSave: false });
 
-    // Send reset link to user's email
-    await mailSender({
-      email: user.email,
-      subject: "Password Reset Request",
-      resetToken,
-    });
+    const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
-    res.status(200).send("Password reset link sent to your email");
+    try {
+      await mailSender({
+        email: user.email,
+        subject: "Password Reset Request",
+        resetToken,
+        resetLink,
+      });
+    } catch (mailError) {
+
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpires = undefined;
+      await user.save({ validateBeforeSave: false });
+      
+      console.error("Mail sending failed:", mailError);
+      return res.status(500).json({ success: false, message: "Error sending reset email. Please try again." });
+    }
+
+    return res.status(200).json({ success: true, message: successMessage });
+
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Server error");
+    console.error("Forgot Password Error:", error);
+    return res.status(500).json({ success: false, message: "Internal Server Error" });
   }
-}; 
-
+};
 
 // -----------profile controller
 const getProfile = async (req, res) => {
