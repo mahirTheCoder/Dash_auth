@@ -1,12 +1,6 @@
-// const adminCheck = (req, res, next) => {
-//   if (req.user.role !== "admin") {
-//     return res.status(403).send({
-//       success: false,
-//       message: "Access denied. Only administrators can perform this action.",
-//     });
-//   }
-//   next();
-// };
+const adminCheck = (req, res, next) => {
+res.status(200).json({ message: "Admin check successful" });
+};
 
 
-// module.exports = { adminCheck };
+module.exports = { adminCheck };
