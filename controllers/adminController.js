@@ -18,21 +18,41 @@ const allUserCheck = async (req, res) => {
   }
 };
 
-// ---------studentUserCheck
-const studentUserCheck = async (req, res) => {
+// ---------getStudents
+const getStudents = async (req, res) => {
   try {
-    const studentUsers = await userSchema.find({ role: "student" });
+    const { status } = req.query;
 
-    if (!studentUsers) {
+    const filter = {
+      role: "student",
+    };
+
+    if (status === "approved") {
+      filter.isApproved = true;
+    } else if (status === "pending") {
+      filter.isApproved = false;
+    }
+
+    const students = await userSchema.find(filter).sort({ createdAt: -1 });
+
+    if (!students) {
       return res.status(403).json({ message: "Access denied. Admins only." });
     }
 
-    console.log("Student Users:", studentUsers);
+    console.log("Student Users:", students);
 
-    res.status(200).json({ message: "Admin check successful" });
+  return res.status(200).json({
+      success: true,
+      message: "Students retrieved successfully",
+      count: students.length,
+      students,
+    });
   } catch (error) {
-    console.error("Error in admin check:", error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve students.",
+      error: error.message,
+    });
   }
 };
 
@@ -51,9 +71,7 @@ const getTeachers = async (req, res) => {
       filter.isApproved = false;
     }
 
-    const teachers = await userSchema
-      .find(filter)
-      .sort({ createdAt: -1 });
+    const teachers = await userSchema.find(filter).sort({ createdAt: -1 });
 
     return res.status(200).json({
       success: true,
@@ -61,7 +79,6 @@ const getTeachers = async (req, res) => {
       count: teachers.length,
       teachers,
     });
-
   } catch (error) {
     console.log(error);
 
@@ -71,7 +88,6 @@ const getTeachers = async (req, res) => {
     });
   }
 };
-
 
 // ----------approvedUserCheck
 const approvedUserCheck = async (req, res) => {
@@ -108,7 +124,7 @@ const deleteUserCheck = async (req, res) => {
 
 module.exports = {
   allUserCheck,
-  studentUserCheck,
+  getStudents,
   getTeachers,
   approvedUserCheck,
   deleteUserCheck,
