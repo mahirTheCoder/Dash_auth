@@ -2,19 +2,35 @@ const userSchema = require("../models/userSchema");
 
 // ----------allUserCheck
 const allUserCheck = async (req, res) => {
-  try {
-    const allUsers = await userSchema.find({ role: ["student", "teacher"] });
+ try {
+    const { role, status } = req.query;
+    const filter = {};
 
-    if (!allUsers) {
-      return res.status(403).json({ message: "Access denied. Admins only." });
+    if (role && ["admin", "teacher", "student"].includes(role)) {
+      filter.role = role;
     }
 
-    console.log("All Users:", allUsers);
+    if (status === "approved") {
+      filter.isApproved = true;
+    } else if (status === "pending") {
+      filter.isApproved = false;
+    }
 
-    res.status(200).json({ message: "Admin check successful" });
+    const users = await userSchema.find(filter).sort({ createdAt: -1 });
+    console.log("All Users:", users);
+
+    return res.status(200).json({
+      success: true,
+      message: "Users retrieved successfully.",
+      count: users.length,
+      users,
+    });
   } catch (error) {
-    console.error("Error in admin check:", error);
-    res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve users.",
+      error: error.message,
+    });
   }
 };
 
@@ -41,7 +57,7 @@ const getStudents = async (req, res) => {
 
     console.log("Student Users:", students);
 
-  return res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "Students retrieved successfully",
       count: students.length,
