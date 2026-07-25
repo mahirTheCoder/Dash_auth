@@ -37,20 +37,38 @@ const studentUserCheck = async (req, res) => {
 };
 
 // ---------teacherUserCheck
-const teacherUserCheck = async (req, res) => {
+const getTeachers = async (req, res) => {
   try {
-    const teacherUsers = await userSchema.find({ role: "teacher" });
+    const { status } = req.query;
 
-    if (!teacherUsers) {
-      return res.status(403).json({ message: "Access denied. Admins only." });
+    const filter = {
+      role: "teacher",
+    };
+
+    if (status === "approved") {
+      filter.isApproved = true;
+    } else if (status === "pending") {
+      filter.isApproved = false;
     }
 
-    console.log("Teacher Users:", teacherUsers);
+    const teachers = await userSchema
+      .find(filter)
+      .sort({ createdAt: -1 });
 
-    res.status(200).json({ message: "Admin check successful" });
+    return res.status(200).json({
+      success: true,
+      message: "Teachers retrieved successfully",
+      count: teachers.length,
+      teachers,
+    });
+
   } catch (error) {
-    console.error("Error in admin check:", error);
-    res.status(500).json({ message: "Internal server error" });
+    console.log(error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
   }
 };
 
