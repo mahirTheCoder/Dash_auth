@@ -72,6 +72,7 @@ const getTeachers = async (req, res) => {
   }
 };
 
+
 // ----------approvedUserCheck
 const approvedUserCheck = async (req, res) => {
   const params = req.params.id;
@@ -108,7 +109,7 @@ const deleteUserCheck = async (req, res) => {
 module.exports = {
   allUserCheck,
   studentUserCheck,
-  teacherUserCheck,
+  getTeachers,
   approvedUserCheck,
   deleteUserCheck,
 };
