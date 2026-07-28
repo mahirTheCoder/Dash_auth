@@ -11,6 +11,7 @@ const forgotPassword = require("./forgetPassroute");
 const resetPassword = require("./resetPasswordRoute");
 
 
+
 router.use("/auth", Signup );
 router.use("/auth", Signin);
 router.use("/auth", VerifyOtp);
