@@ -148,6 +148,10 @@ const signin = async (req, res) => {
       return res.status(400).send("Please verify your email before signing in");
     }
 
+    // if (!user.isApproved) {
+    //   return res.status(403).send("Your account is pending approval from admin.");
+    // }
+
     // ------------comapre password
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {

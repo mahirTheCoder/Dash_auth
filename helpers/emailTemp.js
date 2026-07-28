@@ -44,7 +44,7 @@ const emailTemp = ({ otp, resetLink }) => {
       <div style="max-width:550px;margin:auto;background:white;border-radius:20px;padding:40px;text-align:center">
 
         <h1 style="color:#4f46e5">
-          Damo Ecommerce
+Student Management System
         </h1>
 
         <h2>Your OTP</h2>
