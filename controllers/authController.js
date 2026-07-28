@@ -144,8 +144,8 @@ const signin = async (req, res) => {
   try {
     const user = await userSchema.findOne({ email }).select("+password");
 
-    if (!user) {
-      return res.status(400).send("Invalid email or password");
+    if (!user.isVerified) {
+      return res.status(400).send("Please verify your email before signing in");
     }
 
     // ------------comapre password
@@ -169,7 +169,6 @@ const signin = async (req, res) => {
   }
 };
 
-// ----------forgret password controller
 // ---------- Forgot Password Controller
 
 const forgotPassword = async (req, res) => {
