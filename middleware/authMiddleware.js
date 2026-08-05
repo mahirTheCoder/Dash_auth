@@ -12,19 +12,18 @@ const authMiddleware = (req, res, next) => {
     }
 
     const decoded = jwt.verify(accTkn, process.env.JWT_SEC);
-
     req.user = decoded;
-
     next();
   } catch (error) {
+    console.log("AUTH ERROR:", error);
     return res.status(401).json({
       success: false,
-      message: "Invalid or expired access token",
+      message: "Unauthorized or token expired",
     });
   }
 };
 
-// --------role check middleware 
+// --------role check middleware
 // const roleCheck = (roles) => {
 //   return (req, res, next) => {
 //     if (Array.isArray(roles) && roles.length > 0) {
@@ -38,8 +37,6 @@ const authMiddleware = (req, res, next) => {
 //     }
 //   };
 // };
-
-
 
 module.exports = {
   authMiddleware,

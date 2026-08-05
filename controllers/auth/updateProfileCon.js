@@ -4,7 +4,7 @@ const userSchema = require("../../models/userSchema");
 // --------------update profile controller
 const updateProfile = async (req, res) => {
   const { fullname, address } = req.body;
-  const avatar = req.file;
+  const avatar = req.file || req.files?.[0];
 
   try {
     const user = await userSchema.findOne({
