@@ -1,5 +1,6 @@
+const { mailSender } = require("../../helpers/mailService");
+const { generateOTP } = require("../../helpers/utils");
 const userSchema = require("../../models/userSchema");
-
 
 // --------reSend otp controller
 const resendOtp = async (req, res) => {
@@ -31,7 +32,7 @@ const resendOtp = async (req, res) => {
     res.status(200).send("reSendOtp Successfully");
   } catch (error) {
     console.log(error);
-    res.status(500).send("Server Error");
+    res.status(500).send(`Server Error: ${error.message}`);
   }
 };
 

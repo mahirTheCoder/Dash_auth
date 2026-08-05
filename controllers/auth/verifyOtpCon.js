@@ -21,7 +21,7 @@ const verifyOtp = async (req, res) => {
     await user.save();
 
     res.status(200).send("OTP verified successfully");
-  } catch (error) {;
+  } catch (error) {
     res.status(500).send(`Server error: ${error.message}`);
   }
 };

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { resendOtp } = require("../../controllers/authcontroller");
+const { resendOtp } = require("../../controllers/auth/resendOtpCon");
 
 router.post ("/resendOtp", resendOtp);
 
