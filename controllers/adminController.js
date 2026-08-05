@@ -2,7 +2,7 @@ const userSchema = require("../models/userSchema");
 
 // ----------allUserCheck
 const allUserCheck = async (req, res) => {
- try {
+  try {
     const { role, status } = req.query;
     const filter = {};
 
@@ -123,7 +123,6 @@ const approvedUserCheck = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 const getPendingUsers = async (req, res) => {
   try {

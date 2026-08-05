@@ -54,12 +54,10 @@ const signup = async (req, res) => {
       });
     } catch (mailError) {
       console.error("Signup OTP Mail Error:", mailError);
-      return res
-        .status(500)
-        .json({
-          success: false,
-          message: "Failed to send OTP email. Please try again.",
-        });
+      return res.status(500).json({
+        success: false,
+        message: "Failed to send OTP email. Please try again.",
+      });
     }
 
     res.status(200).send("SignUp Successfully");
