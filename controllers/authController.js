@@ -13,86 +13,88 @@ const {
 const userSchema = require("../models/userSchema");
 
 // -----------signUp Controler
-const signup = async (req, res) => {
-  const { fullname, email, password, role } = req.body;
-  try {
-    if (!fullname) return res.status(400).send("Fullname is required");
-    if (!email) return res.status(400).send("Email is required");
-    if (!isValidEmail(email)) return res.status(400).send("Invalid email");
-    if (!password || password.length < 6)
-      return res
-        .status(400)
-        .send("Password is required and must be at least 6 characters long");
+// const signup = async (req, res) => {
+//   const { fullname, email, password, role } = req.body;
+//   try {
+//     if (!fullname) return res.status(400).send("Fullname is required");
+//     if (!email) return res.status(400).send("Email is required");
+//     if (!isValidEmail(email)) return res.status(400).send("Invalid email");
+//     if (!password || password.length < 6)
+//       return res
+//         .status(400)
+//         .send("Password is required and must be at least 6 characters long");
 
-    if (!role) return res.status(400).send("Role is required");
+//     if (!role) return res.status(400).send("Role is required");
 
-    // --------existing user
-    const existingUser = await userSchema.findOne({ email });
-    if (existingUser)
-      return res.status(400).send("User with this email already exists");
+//     // --------existing user
+//     const existingUser = await userSchema.findOne({ email });
+//     if (existingUser)
+//       return res.status(400).send("User with this email already exists");
 
-    // --------------otp generate
-    const otp = generateOTP();
+//     // --------------otp generate
+//     const otp = generateOTP();
 
-    // ----------data base save
-    const user = await userSchema.create({
-      fullname,
-      email,
-      password,
-      role,
-      otp,
-      otpExpires: Date.now() + 5 * 60 * 1000,
-      isApproved: role === "student" ? true : false,
-    });
+//     // ----------data base save
+//     const user = await userSchema.create({
+//       fullname,
+//       email,
+//       password,
+//       role,
+//       otp,
+//       otpExpires: Date.now() + 5 * 60 * 1000,
+//       isApproved: role === "student" ? true : false,
+//     });
 
-    // ---------send otp to user mail
-    try {
-      await mailSender({
-        email,
-        subject: "OTP Verification",
-        otp,
-      });
-    } catch (mailError) {
-      console.error("Signup OTP Mail Error:", mailError);
-      return res.status(500).json({
-        success: false,
-        message: "Failed to send OTP email. Please try again.",
-      });
-    }
+//     // ---------send otp to user mail
+//     try {
+//       await mailSender({
+//         email,
+//         subject: "OTP Verification",
+//         otp,
+//       });
+//     } catch (mailError) {
+//       console.error("Signup OTP Mail Error:", mailError);
+//       return res.status(500).json({
+//         success: false,
+//         message: "Failed to send OTP email. Please try again.",
+//       });
+//     }
 
-    res.status(200).send("SignUp Successfully");
-  } catch (err) {
-    console.log(err);
-    return res.status(500).send("Server error");
-  }
-};
+//     res.status(200).send("SignUp Successfully");
+//   } catch (err) {
+//     console.log(err);
+//     return res.status(500).send("Server error");
+//   }
+// };
 
 // ----------veriFy Otp controller
-const verifyOtp = async (req, res) => {
-  const { email, otp } = req.body;
+// const verifyOtp = async (req, res) => {
+//   const { email, otp } = req.body;
 
-  try {
-    const user = await userSchema.findOne({
-      email,
-      otp,
-      otpExpires: { $gt: Date.now() },
-      isVerified: false,
-    });
-    if (!user) return res.status(400).send("Invalid OTP or User not found");
-    // -------after validations
-    user.isVerified = true;
-    user.otp = null;
-    user.otpExpires = null;
-    user.otpverify = true;
-    // ----------data abse save data
-    await user.save();
+//   try {
+//     const user = await userSchema.findOne({
+//       email,
+//       otp,
+//       otpExpires: { $gt: Date.now() },
+//       isVerified: false,
+//     });
+//     if (!user) return res.status(400).send("Invalid OTP or User not found");
+//     // -------after validations
+//     user.isVerified = true;
+//     user.otp = null;
+//     user.otpExpires = null;
+//     user.otpverify = true;
+//     // ----------data abse save data
+//     await user.save();
 
-    res.status(200).send("OTP verified successfully");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Server error ");
-  }
-};
+//     res.status(200).send("OTP verified successfully");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Server error ");
+//   }
+// };
+
+
 
 // --------reSend otp controller
 const resendOtp = async (req, res) => {
@@ -367,8 +369,8 @@ const updateProfile = async (req, res) => {
 };
 
 module.exports = {
-  signup,
-  verifyOtp,
+  // signup,
+  // verifyOtp,
   resendOtp,
   signin,
   forgotPassword,
