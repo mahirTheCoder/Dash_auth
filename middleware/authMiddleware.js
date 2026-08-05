@@ -1,18 +1,26 @@
 const jwt = require("jsonwebtoken");
 
-// ---------decode 
 const authMiddleware = (req, res, next) => {
   try {
-    const  {accTkn}  = req.cookies;
-    const decoded = jwt.verify(accTkn, process.env.JWT_SEC);
-    if (decoded) {
-      req.user = decoded;
-      next();
-    } else {
-      res.status(401).send({ message: "Unauthorized request" });
+    const { accTkn } = req.cookies;
+
+    if (!accTkn) {
+      return res.status(401).json({
+        success: false,
+        message: "Access token is missing",
+      });
     }
+
+    const decoded = jwt.verify(accTkn, process.env.JWT_SEC);
+
+    req.user = decoded;
+
+    next();
   } catch (error) {
-    console.log("AUTH ERROR:", error);
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired access token",
+    });
   }
 };
 
@@ -32,4 +40,7 @@ const authMiddleware = (req, res, next) => {
 // };
 
 
-module.exports = { authMiddleware  };
+
+module.exports = {
+  authMiddleware,
+};

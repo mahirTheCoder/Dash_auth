@@ -131,47 +131,47 @@ const resendOtp = async (req, res) => {
 };
 
 // ---------cookie configs
-const cookieConfig = {
-  httpOnly: true, // Prevents client-side JS/XSS attacks
-  secure: true, // Ensures cookie is sent only over HTTPS
-  maxAge: 1000 * 60 * 60 * 24 * 7, // Expires in 7 days (in milliseconds)
-};
+// const cookieConfig = {
+//   httpOnly: true, // Prevents client-side JS/XSS attacks
+//   secure: true, // Ensures cookie is sent only over HTTPS
+//   maxAge: 1000 * 60 * 60 * 24 * 7, // Expires in 7 days (in milliseconds)
+// };
 
 // ----------signIn controller
-const signin = async (req, res) => {
-  const { email, password } = req.body;
+// const signin = async (req, res) => {
+//   const { email, password } = req.body;
 
-  try {
-    const user = await userSchema.findOne({ email }).select("+password");
+//   try {
+//     const user = await userSchema.findOne({ email }).select("+password");
 
-    if (!user.isVerified) {
-      return res.status(400).send("Please verify your email before signing in");
-    }
+//     if (!user.isVerified) {
+//       return res.status(400).send("Please verify your email before signing in");
+//     }
 
-    // if (!user.isApproved) {
-    //   return res.status(403).send("Your account is pending approval from admin.");
-    // }
+//     // if (!user.isApproved) {
+//     //   return res.status(403).send("Your account is pending approval from admin.");
+//     // }
 
-    // ------------comapre password
-    const isMatch = await user.comparePassword(password);
-    if (!isMatch) {
-      return res.status(400).send("Invalid email or password");
-    }
+//     // ------------comapre password
+//     const isMatch = await user.comparePassword(password);
+//     if (!isMatch) {
+//       return res.status(400).send("Invalid email or password");
+//     }
 
-    // ------------access token refresh token pass
-    const accTkn = generateAccessToken(user);
-    const refTkn = generateRefreshToken(user);
+//     // ------------access token refresh token pass
+//     const accTkn = generateAccessToken(user);
+//     const refTkn = generateRefreshToken(user);
 
-    res
-      .status(200)
-      .cookie("accTkn", accTkn, cookieConfig)
-      .cookie("refTkn", refTkn, cookieConfig)
-      .send("signIn Successfully");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Server error");
-  }
-};
+//     res
+//       .status(200)
+//       .cookie("accTkn", accTkn, cookieConfig)
+//       .cookie("refTkn", refTkn, cookieConfig)
+//       .send("signIn Successfully");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Server error");
+//   }
+// };
 
 // ---------- Forgot Password Controller
 
@@ -371,8 +371,8 @@ const updateProfile = async (req, res) => {
 module.exports = {
   // signup,
   // verifyOtp,
-  resendOtp,
-  signin,
+  // resendOtp,
+  // signin,
   forgotPassword,
   resetPassword,
   getProfile,
