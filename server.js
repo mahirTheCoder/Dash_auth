@@ -2,9 +2,8 @@ require('dotenv').config()
 const express = require ('express')
 const router = require ('./routes')
 const cookieParser = require("cookie-parser");
-// const {rateLimit} = require('express-rate-limit')
 const dbConfig = require('./configs/dbConfig')
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 88800
 
 // // -----when db congfig not working then use this code t
 const dns = require('dns');

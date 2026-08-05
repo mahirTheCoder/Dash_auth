@@ -7,12 +7,9 @@ const dbConfig = () => {
       console.log("Database connected successfully");
     })
     .catch((err) => {
-      console.log("Database connection failed");
+      console.log(`Database connection failed: ${err}`);
     });
 };
 
-// PORT = 8000
-// BASE_URL=/api/v1
-// DB_URL=mongodb+srv://management:LCjhehBpkzyuCifi@cluster0.mjewgzf.mongodb.net/hazira?appName=Cluster0
 
 module.exports = dbConfig;
