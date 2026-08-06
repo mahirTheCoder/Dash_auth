@@ -60,10 +60,12 @@ const userSchema = new mongoose.Schema({
   resetPasswordExpires: {
     type: Date,
   },
-  isApproved: {
-    type: Boolean,
-    default: false,
-  },
+    isApproved: {
+      type: Boolean,
+      default: function() {
+        return this.role === "admin";
+      },
+    },
   timestamp: {
     type: Date,
     default: Date.now,

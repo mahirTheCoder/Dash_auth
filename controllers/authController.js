@@ -97,38 +97,38 @@ const userSchema = require("../models/userSchema");
 
 
 // --------reSend otp controller
-const resendOtp = async (req, res) => {
-  const { email } = req.body;
+// const resendOtp = async (req, res) => {
+//   const { email } = req.body;
 
-  try {
-    const user = await userSchema.findOne({
-      email,
-      isVerified: false,
-    });
+//   try {
+//     const user = await userSchema.findOne({
+//       email,
+//       isVerified: false,
+//     });
 
-    if (!user) return res.status(400).send("inavlid request");
+//     if (!user) return res.status(400).send("inavlid request");
 
-    // ----------otp generator
-    const otp = generateOTP();
-    user.otp = otp;
-    user.otpExpires = Date.now() + 5 * 60 * 1000;
+//     // ----------otp generator
+//     const otp = generateOTP();
+//     user.otp = otp;
+//     user.otpExpires = Date.now() + 5 * 60 * 1000;
 
-    // ---------send otp to user mail
-    await mailSender({
-      email,
-      subject: "Otp Verifications ",
-      otp,
-    });
+//     // ---------send otp to user mail
+//     await mailSender({
+//       email,
+//       subject: "Otp Verifications ",
+//       otp,
+//     });
 
-    // ---------save data base stor
-    await user.save();
+//     // ---------save data base stor
+//     await user.save();
 
-    res.status(200).send("reSendOtp Successfully");
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Server Error");
-  }
-};
+//     res.status(200).send("reSendOtp Successfully");
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send("Server Error");
+//   }
+// };
 
 // ---------cookie configs
 // const cookieConfig = {
@@ -175,84 +175,81 @@ const resendOtp = async (req, res) => {
 
 // ---------- Forgot Password Controller
 
-const forgotPassword = async (req, res) => {
-  const { email } = req.body;
+// const forgotPassword = async (req, res) => {
+//   const { email } = req.body;
 
-  try {
-    // -------- Validation
-    if (!email) {
-      return res.status(400).json({
-        success: false,
-        message: "Email is required",
-      });
-    }
+//   try {
+//     // -------- Validation
+//     if (!email) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Email is required",
+//       });
+//     }
 
-    if (!isValidEmail(email)) {
-      return res.status(400).json({
-        success: false,
-        message: "Invalid email",
-      });
-    }
+//     if (!isValidEmail(email)) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "Invalid email",
+//       });
+//     }
 
-    // -------- Find User
-    const user = await userSchema.findOne({ email });
+//     // -------- Find User
+//     const user = await userSchema.findOne({ email });
 
-    // Security Response
-    const successMessage =
-      "If an account exists with that email, a password reset link has been sent.";
 
-    if (!user) {
-      return res.status(200).json({
-        success: true,
-        message: successMessage,
-      });
-    }
+//     if (!user) {
+//       return res.status(200).json({
+//         success: true,
+//         message: successMessage,
+//       });
+//     }
 
-    // -------- Generate Reset Token
-    const resetToken = user.createPasswordResetToken();
+//     // -------- Generate Reset Token
+//     const resetToken = user.createPasswordResetToken();
 
-    console.log("Reset Token:", resetToken);
+//     console.log("Reset Token:", resetToken);
 
-    // -------- Save Token
-    await user.save({ validateBeforeSave: false });
+//     // -------- Save Token
+//     await user.save({ validateBeforeSave: false });
 
-    // -------- Reset Link
-    const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
+//     // -------- Reset Link
+//     const resetLink = `${process.env.CLIENT_URL}/reset-password/${resetToken}`;
 
-    // -------- Send Mail
-    try {
-      await mailSender({
-        email: user.email,
-        subject: "Password Reset Request",
-        resetLink,
-      });
-    } catch (mailError) {
-      user.resetPasswordToken = undefined;
-      user.resetPasswordExpires = undefined;
+//     // -------- Send Mail
+//     try {
+//       await mailSender({
+//         email: user.email,
+//         subject: "Password Reset Request",
+//         resetLink,
+//       });
+//     } catch (mailError) {
+//       user.resetPasswordToken = undefined;
+//       user.resetPasswordExpires = undefined;
 
-      await user.save({ validateBeforeSave: false });
+//       await user.save({ validateBeforeSave: false });
 
-      console.error(mailError);
+//       console.error(mailError);
 
-      return res.status(500).json({
-        success: false,
-        message: "Failed to send reset email",
-      });
-    }
+//       return res.status(500).json({
+//         success: false,
+//         message: "Failed to send reset email",
+//       });
+//     }
 
-    return res.status(200).json({
-      success: true,
-      message: successMessage,
-    });
-  } catch (error) {
-    console.error(error);
+//     return res.status(200).json({
+//       success: true,
+//       user
+//     });
+//   } catch (error) {
+//     console.error(error);
 
-    return res.status(500).json({
-      success: false,
-      message: "Internal Server Error",
-    });
-  }
-};
+//     return res.status(500).json({
+//       success: false,
+//       message: "Internal Server Error",
+//     });
+//   }
+// };
 
 // -----------reset password controller
 const resetPassword = async (req, res) => {
@@ -314,7 +311,7 @@ const resetPassword = async (req, res) => {
 //   }
 // };
 
-// // --------------update profile controller
+// --------------update profile controller
 // const updateProfile = async (req, res) => {
 //   const { fullname, address } = req.body;
 //   const avatar = req.file;
@@ -373,7 +370,7 @@ module.exports = {
   // verifyOtp,
   // resendOtp,
   // signin,
-  forgotPassword,
+  // forgotPassword,
   resetPassword,
   // getProfile,
   // updateProfile,
