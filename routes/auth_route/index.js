@@ -9,6 +9,7 @@ const getProfile = require("./getProfileRoute");
 const updateProfile = require("./updatePrtofile");
 const forgotPassword = require("./forgetPassroute");
 const resetPassword = require("./resetPasswordRoute");
+const logout = require("./logout_route");
 
 
 
@@ -20,5 +21,5 @@ router.use("/auth", getProfile);
 router.use("/auth", updateProfile);
 router.use("/auth", forgotPassword);
 router.use("/auth", resetPassword);
-
+router.use("/auth", logout);
 module.exports = router;
