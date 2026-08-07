@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 
-
 // ----------all routes
 const teacher = require("./get_teacher");
 const student = require("./get_student");
@@ -12,8 +11,6 @@ const delluser = require("./del_user");
 const approveduser = require("./approved_user");
 const { authMiddleware } = require("../../middleware/authMiddleware");
 const { requireAdmin } = require("../../middleware/roleCheckMiddleware");
-
-
 
 
 // ----------all routes 
