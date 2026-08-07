@@ -116,8 +116,8 @@ const deleteClass = async (req, res) => {
 };
 
 module.exports = {
-  createClass,
-  getClasses,
-  updateClass,
-  deleteClass,
+  // createClass,
+  // getClasses,
+  // updateClass,
+  // deleteClass,
 };

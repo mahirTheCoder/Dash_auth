@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { createClass } = require("../../controllers/classController");
-const { getClasses } = require("../../controllers/classController");
-const { deleteClass } = require("../../controllers/classController");
-const { updateClass } = require("../../controllers/classController");
+const { createClass } = require("../../controllers/class/create_class");
+const { getClasses } = require("../../controllers/class/get_class");
+const { deleteClass } = require("../../controllers/class/del_class");
+const { updateClass } = require("../../controllers/class/upadate_class");
 const { authMiddleware } = require("../../middleware/authMiddleware");
 const { requireAdmin } = require("../../middleware/roleCheckMiddleware");
 
