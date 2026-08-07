@@ -24,7 +24,10 @@ const getPendingUsers = async (req, res) => {
       success: true,
       message: "Pending users retrieved successfully.",
       data: {
-        users: pendingUsers.map(formatUser),
+        users: pendingUsers.map((user) => ({
+          id: user._id,
+          name: user.name,
+        })),
         pagination: {
           currentPage: page,
           totalPages,

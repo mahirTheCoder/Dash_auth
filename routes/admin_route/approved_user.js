@@ -3,6 +3,6 @@ const router = express.Router();
 // const { approvedUserCheck } = require("../../controllers/adminController");
 const { approvedUserCheck } = require("../../controllers/admin/approved");
 
-router.get("/approved/:id", approvedUserCheck);
+router.patch("/approved/:id", approvedUserCheck);
 
 module.exports = router;
