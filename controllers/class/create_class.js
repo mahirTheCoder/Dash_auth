@@ -37,6 +37,7 @@ const createClass = async (req, res) => {
 
 
 module.exports = {
+  
   createClass,
 
 };
