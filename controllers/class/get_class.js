@@ -1,5 +1,6 @@
 const classSchema = require("../../models/classSchema");
 
+
 // ---------get all classes
 const getClasses = async (req, res) => {
   try {
@@ -20,6 +21,7 @@ const getClasses = async (req, res) => {
 
 
 module.exports = {
+
   getClasses
 
 };

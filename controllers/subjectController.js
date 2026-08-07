@@ -84,6 +84,8 @@ const deleteSubject = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   createSubject,
   getAllSubjects,

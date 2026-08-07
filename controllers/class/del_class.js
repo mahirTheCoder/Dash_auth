@@ -2,7 +2,6 @@ const classSchema = require("../../models/classSchema");
 
 
 // ------------delete class
-
 const deleteClass = async (req, res) => {
   try {
     const { id } = req.params;

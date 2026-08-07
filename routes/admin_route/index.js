@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const subjectRoutes = require("./subject");
-const classRoute = require("./class");
 
 // ----------all routes
 const teacher = require("./get_teacher");
@@ -17,7 +16,6 @@ const { requireAdmin } = require("../../middleware/roleCheckMiddleware");
 
 
 router.use("/subject", subjectRoutes);
-router.use("/class", classRoute);
 
 // ----------all routes 
 

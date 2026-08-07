@@ -1,6 +1,7 @@
 const classSchema = require("../../models/classSchema");
 
 
+// -----------create class
 const createClass = async (req, res) => {
   try {
     const { name, code, description, creatorId, subjects } = req.body;
