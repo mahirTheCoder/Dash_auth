@@ -1,33 +1,35 @@
-// const express = require("express");
-// const router = express.Router();
-
-// const subjectRoutes = require("./subject");
-// const classRoute = require("./class");
-
-// // ----------all routes
-// const teacher = require("./get_teacher");
-// const student = require("./get_student");
-// const alluser = require("./get_all_user");
-// const pending = require("./get_pending_user");
-// const delluser = require("./del_user");
-// const approveduser = require("./approved_user");
-// const { authMiddleware } = require("../../middleware/authMiddleware");
-// const { requireAdmin } = require("../../middleware/roleCheckMiddleware");
+const express = require("express");
+const router = express.Router();
 
 
-
-// router.use("/subject", subjectRoutes);
-// router.use("/class", classRoute);
-
-// // ----------all routes 
-
-// router.use( authMiddleware, requireAdmin);
-// router.use("/admin", alluser);
-// router.use("/admin", approveduser);
-// router.use("/admin", delluser);
-// router.use("/admin", pending);
-// router.use("/admin", teacher);
-// router.use("/admin", student);
+// ----------all routes
+const create = require("./create");
+const deletes = require("./delete");
+const disslike = require("./dislike");
+const edits = require("./edit");
+const getAll = require("./get_all");
+const like = require("./like");
+const dislike = require("./dislike");
 
 
-// module.exports = router;
+// ------middleware
+const { authMiddleware } = require("../../middleware/authMiddleware");
+const { requireAdmin } = require("../../middleware/roleCheckMiddleware");
+
+
+
+
+// ----------all routes 
+
+router.use( authMiddleware, requireAdmin);
+router.use("/notice", create);
+router.use("/notice", deletes);
+router.use("/notice", disslike);
+router.use("/notice", edits);
+router.use("/notice", getAll);
+router.use("/notice", like);
+router.use("/notice", dislike);
+
+
+
+module.exports = router;
