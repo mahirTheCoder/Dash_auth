@@ -3,14 +3,14 @@ const router = express.Router();
 
 
 // ----------all routes
-const create = require("./create");
-const deletes = require("./delete");
-const disslike = require("./dislike");
-const edits = require("./edit");
-const getAll = require("./get_all");
-const like = require("./like");
-const dislike = require("./dislike");
-
+const createNotice = require("./create");
+const getAllNotice = require("./get_all");
+const singleNotice = require("./single");
+const editsNotice = require("./edit");
+const deletesNotice = require("./delete");
+const disslikeNoticce = require("./dislike");
+const likeNotice = require("./like");
+const singleNotice = require("./single");
 
 // ------middleware
 const { authMiddleware } = require("../../middleware/authMiddleware");
@@ -18,17 +18,16 @@ const { requireAdmin } = require("../../middleware/roleCheckMiddleware");
 
 
 
-
 // ----------all routes 
 
 router.use( authMiddleware, requireAdmin);
-router.use("/notice", create);
-router.use("/notice", deletes);
-router.use("/notice", disslike);
-router.use("/notice", edits);
-router.use("/notice", getAll);
-router.use("/notice", like);
-router.use("/notice", dislike);
+router.use("/notice", createNotice);
+router.use("/notice", getAllNotice);
+router.use("/notice", singleNotice);
+router.use("/notice", editsNotice);
+router.use("/notice", deletesNotice);
+router.use("/notice", likeNotice);
+router.use("/notice", disslikeNoticce);
 
 
 
