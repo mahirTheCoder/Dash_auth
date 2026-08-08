@@ -1,7 +1,7 @@
 const noticeSchema = require("../../models/noticeSchema");
 
 // ---------create notice
-export const createNotice = async (req, res) => {
+const createNotice = async (req, res) => {
   try {
     const { title, description, image } = req.body;
 
@@ -31,3 +31,7 @@ export const createNotice = async (req, res) => {
     });
   }
 };
+
+
+
+module.exports = { createNotice };
