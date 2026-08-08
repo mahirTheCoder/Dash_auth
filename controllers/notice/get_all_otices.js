@@ -1,7 +1,7 @@
 const noticeSchema = require("../../models/noticeSchema");
 
 
-export const getAllNotices = async (req, res) => {
+ const getAllNotices = async (req, res) => {
   try {
     const notices = await noticeSchema.find()
       .populate("createdBy", "name email")

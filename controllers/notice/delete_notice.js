@@ -1,7 +1,7 @@
 const noticeSchema = require("../../models/noticeSchema");
 
 
-export const deleteNotice = async (req, res) => {
+const deleteNotice = async (req, res) => {
  
     const { id } = req.params;
 

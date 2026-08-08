@@ -2,7 +2,7 @@ const noticeSchema = require("../../models/noticeSchema");
 
 
 // ---------get single notice
-export const getSingleNotice = async (req, res) => {
+const getSingleNotice = async (req, res) => {
   const { id } = req.params;
 
   try {

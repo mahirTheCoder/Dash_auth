@@ -1,7 +1,7 @@
 const noticeSchema = require("../../models/noticeSchema");
 
 // ---------like notice
-export const likeNotice = async (req, res) => {
+ const likeNotice = async (req, res) => {
 
  const { id } = req.params;
 
